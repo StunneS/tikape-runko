@@ -1,5 +1,6 @@
 package tikape.runko;
 
+import java.io.File;
 import java.util.HashMap;
 import spark.ModelAndView;
 import spark.Spark;
@@ -15,7 +16,8 @@ public class Main {
         if (System.getenv("PORT") != null) {
             Spark.port(Integer.valueOf(System.getenv("PORT")));
         }
-        Database database = new Database("jdbc:sqlite:opiskelijat.db");
+        File tied = new File("db","database.db");
+        Database database = new Database("jdbc:sqlite:" + tied.getAbsolutePath());
         database.init();
 
         OpiskelijaDao opiskelijaDao = new OpiskelijaDao(database);

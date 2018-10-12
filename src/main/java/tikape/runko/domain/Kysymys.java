@@ -5,6 +5,9 @@
  */
 package tikape.runko.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author Sade-Tuuli
@@ -14,12 +17,14 @@ public class Kysymys {
     private String kurssi;
     private String aihe;
     private String kysymysteksti;
+    private List<Vastaus> lista;
 
     public Kysymys(Integer id, String kurssi,String aihe, String kysymysteksti) {
         this.id = id;
         this.kurssi = kurssi;
         this.aihe = aihe;
         this.kysymysteksti = kysymysteksti;
+        this.lista = new ArrayList<>();
     }
 
     public Integer getId() {
@@ -49,5 +54,11 @@ public class Kysymys {
     }
     public void setKysymysteksti(String kysymysteksti) {
         this.kysymysteksti = kysymysteksti;
+    }
+    public List<Vastaus> getLista(){
+    return lista;
+    }
+    public void setLista(List<Vastaus> vastaukset) {
+        this.lista = vastaukset;
     }
 }
