@@ -16,7 +16,7 @@ public class Main {
         if (System.getenv("PORT") != null) {
             Spark.port(Integer.valueOf(System.getenv("PORT")));
         }
-        File tied = new File("db","database.db");
+        File tied = new File("db","tietokanta.db");
         Database database = new Database("jdbc:sqlite:" + tied.getAbsolutePath());
         database.init();
 
