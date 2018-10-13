@@ -7,8 +7,15 @@
     </head>
 
     <body>
-        <h1>Hei <span th:text="${opiskelija.nimi}">opiskelija</span>!</h1>
-
-        <p>Olet saapunut opiskelijan <span th:text="${opiskelija.nimi}">opiskelija</span> henkilökohtaiselle sivulle.</p>
+        <form method="POST" action="/opiskelija">
+            <span>Kurssi:</span><br/>
+            <input type="text" name="kurssi"/><br/>
+            <span>Aihe:</span><br/>
+            <input type="text" name="aihe"/><br/>
+            <span>Kysymys:</span><br/>
+            <input type="text" name="kysymysteksti"/><br/>
+            <input type="submit" value="Lisää kysymys"/>
+        </form>
+        
     </body>
 </html>

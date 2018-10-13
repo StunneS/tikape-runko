@@ -72,4 +72,9 @@ public class OpiskelijaDao implements Dao<Opiskelija, Integer> {
         // ei toteutettu
     }
 
+    @Override
+    public Opiskelija saveOrUpdate(Opiskelija a) {
+        //ei tehty
+        return null;
+    }
 }

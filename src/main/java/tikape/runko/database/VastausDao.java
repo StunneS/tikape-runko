@@ -85,5 +85,10 @@ public class VastausDao  implements Dao<Vastaus, Integer> {
         
         connection.close();
     }
+    @Override
+    public Vastaus saveOrUpdate(Vastaus a) {
+        //ei tehty
+        return null;
+    }
     
 }

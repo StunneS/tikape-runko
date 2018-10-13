@@ -2,16 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
     <head>
-        <title>Otsikko</title>
+        <title>Kysymykset</title>
         <meta charset="utf-8" />
     </head>
 
     <body>
-        <h1>Hei opiskelijat!</h1>
+        <h1>Kysymykset</h1>
 
         <ol>
-            <li th:each="opiskelija: ${opiskelijat}">
-                <span th:text="${opiskelija.nimi}">opiskelijan nimi</span> <a th:href="${'/opiskelijat/' + opiskelija.id}">linkki</a>
+            <li th:each="kysymys ${kysymykset}">
+                <span th:text="${kysymys.kysymysteksti}">Kysymys</span> <a th:href="${'/opiskelijat/' + kysymys.id}">linkki</a>
             </li>
         </ol>
     </body>

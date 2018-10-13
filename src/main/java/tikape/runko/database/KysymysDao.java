@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import tikape.runko.domain.Kysymys;
+import tikape.runko.domain.Vastaus;
 
 /**
  *
@@ -65,7 +66,16 @@ public class KysymysDao implements Dao<Kysymys, Integer> {
             String kysymys = rs.getString("kysymysteksti");
             String aihe = rs.getString("aihe");
 
-            kysymykset.add(new Kysymys(id, kurssi, aihe, kysymys));
+            Kysymys o = new Kysymys(id, kurssi, aihe, kysymys);
+            //haetaan liittyvät vastaukset:
+            List<Vastaus> vastaukset = new ArrayList<>();
+            PreparedStatement ps2 = connection.prepareStatement("SELECT * FROM Vastaus WHERE Vastaus.kysymys_id = " + id);
+            ResultSet rs2 = ps2.executeQuery();
+            while(rs2.next()){
+                vastaukset.add(new Vastaus(rs2.getInt("id"),rs2.getString("teksti"),rs2.getBoolean("oikein")));
+            }
+            o.setLista(vastaukset);
+            kysymykset.add(o);
         }
 
         rs.close();
@@ -86,5 +96,10 @@ public class KysymysDao implements Dao<Kysymys, Integer> {
         stmt.close();
         
         connection.close();
+    }
+    @Override
+    public Kysymys saveOrUpdate(Kysymys a) {
+        //ei tehty
+        return null;
     }
 }
