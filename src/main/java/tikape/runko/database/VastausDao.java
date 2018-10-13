@@ -58,21 +58,19 @@ public class VastausDao  implements Dao<Vastaus, Integer> {
         PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Vastaus");
 
         ResultSet rs = stmt.executeQuery();
-        List<Vastaus> kysymykset = new ArrayList<>();
+        List<Vastaus> vastaukset = new ArrayList<>();
         while (rs.next()) {
             Integer id = rs.getInt("id");
-            String kurssi = rs.getString("kurssi");
-            String kysymys = rs.getString("kysymysteksti");
-            String aihe = rs.getString("aihe");
-
-            //kysymykset.add(new Vastaus(id, kurssi, aihe, kysymys));
+            String teksti = rs.getString("teksti");
+            boolean oikein = rs.getBoolean("oikein");
+            vastaukset.add(new Vastaus(id, teksti, oikein));
         }
 
         rs.close();
         stmt.close();
         connection.close();
 
-        return kysymykset;
+        return vastaukset;
     }
 
     @Override
@@ -86,6 +84,6 @@ public class VastausDao  implements Dao<Vastaus, Integer> {
         stmt.close();
         
         connection.close();
-    } {
+    }
     
 }
