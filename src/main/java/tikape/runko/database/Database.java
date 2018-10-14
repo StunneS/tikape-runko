@@ -38,6 +38,8 @@ public class Database {
     private List<String> sqliteLauseet() {
         ArrayList<String> lista = new ArrayList<>();
 
+        lista.add("DROP TABLE IF EXISTS Kysymys");
+        lista.add("DROP TABLE IF EXISTS Vastaus");
         // tietokantataulujen luomiseen tarvittavat komennot suoritusjärjestyksessä
         lista.add("CREATE TABLE Kysymys (id integer PRIMARY KEY, kurssi varchar(255),aihe varchar(255),kysymysteksti varchar(500));");
         lista.add("CREATE TABLE Vastaus (id integer PRIMARY KEY, teksti varchar(500),oikein boolean, kysymys_id integer, FOREIGN KEY (kysymys_id) REFERENCES Kysymys(id));");
