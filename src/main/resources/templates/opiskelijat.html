@@ -10,7 +10,7 @@
         <h1>Kysymykset</h1>
 
         <ol>
-            <li th:each="kysymys ${kysymykset}">
+            <li th:each="kysymys: ${kysymykset}">
                 <span th:text="${kysymys.kysymysteksti}">Kysymys</span> <a th:href="${'/opiskelijat/' + kysymys.id}">linkki</a>
             </li>
         </ol>

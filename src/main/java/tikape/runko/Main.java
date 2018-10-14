@@ -61,7 +61,7 @@ public class Main {
             String kysymys = req.queryParams("kysymysteksti");
             //System.out.println("Vastaanotettiin " + nimi);
 
-        return "Kerrotaan siitä tiedon lähettäjälle: " + nimi;
+        return "Kerrotaan siitä tiedon lähettäjälle: ";
         });
     }
 }

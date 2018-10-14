@@ -76,6 +76,8 @@ public class KysymysDao implements Dao<Kysymys, Integer> {
             }
             o.setLista(vastaukset);
             kysymykset.add(o);
+            rs2.close();
+            ps2.close();
         }
 
         rs.close();
