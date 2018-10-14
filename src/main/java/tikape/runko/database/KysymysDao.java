@@ -42,7 +42,8 @@ public class KysymysDao implements Dao<Kysymys, Integer> {
         String kysymys = rs.getString("kysymysteksti");
         String aihe = rs.getString("aihe");
         
-        Kysymys o = new Kysymys(id,kurssi,aihe,kysymys);
+        Kysymys o = new Kysymys(kurssi,aihe,kysymys);
+        o.setId(id);
 
         rs.close();
         stmt.close();
@@ -66,7 +67,8 @@ public class KysymysDao implements Dao<Kysymys, Integer> {
             String kysymys = rs.getString("kysymysteksti");
             String aihe = rs.getString("aihe");
 
-            Kysymys o = new Kysymys(id, kurssi, aihe, kysymys);
+            Kysymys o = new Kysymys(kurssi, aihe, kysymys);
+            o.setId(id);
             //haetaan liittyvät vastaukset:
             List<Vastaus> vastaukset = new ArrayList<>();
             PreparedStatement ps2 = connection.prepareStatement("SELECT * FROM Vastaus WHERE Vastaus.kysymys_id = " + id);
@@ -100,8 +102,30 @@ public class KysymysDao implements Dao<Kysymys, Integer> {
         connection.close();
     }
     @Override
-    public Kysymys saveOrUpdate(Kysymys a) {
+    public Kysymys saveOrUpdate(Kysymys a) throws SQLException{
         //ei tehty
-        return null;
+        Connection connection = database.getConnection();
+        PreparedStatement stmt = connection.prepareStatement("SELECT * From Kysymys WHERE kysymysteksti LIKE ?");
+        stmt.setObject(1, a.getKysymysteksti());
+        ResultSet rs = stmt.executeQuery();
+        boolean hasOne = rs.next();
+        if (hasOne) {
+            rs.close();
+            stmt.close();
+            connection.close();
+            return null;
+        }
+        rs.close();
+        stmt.close();
+        
+        PreparedStatement smt = connection.prepareStatement("INSERT INTO Kysymys (kurssi, aihe, kysymysteksti) VALUES (?,?,?)");
+        smt.setObject(1, a.getKurssi());
+        smt.setObject(2, a.getAihe());
+        smt.setObject(3, a.getKysymysteksti());
+        smt.executeUpdate();
+        
+        smt.close();
+        connection.close();
+        return a;
     }
 }

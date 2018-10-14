@@ -19,8 +19,7 @@ public class Kysymys {
     private String kysymysteksti;
     private List<Vastaus> lista;
 
-    public Kysymys(Integer id, String kurssi,String aihe, String kysymysteksti) {
-        this.id = id;
+    public Kysymys( String kurssi,String aihe, String kysymysteksti) {
         this.kurssi = kurssi;
         this.aihe = aihe;
         this.kysymysteksti = kysymysteksti;

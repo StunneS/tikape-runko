@@ -10,6 +10,7 @@ import tikape.runko.database.Database;
 import tikape.runko.database.KysymysDao;
 import tikape.runko.database.OpiskelijaDao;
 import tikape.runko.database.VastausDao;
+import tikape.runko.domain.Kysymys;
 
 public class Main {
 
@@ -56,12 +57,15 @@ public class Main {
         }, new ThymeleafTemplateEngine());
         
         Spark.post("/opiskelija", (req, res) -> {
-            String nimi = req.queryParams("kurssi");
+            String kurssi = req.queryParams("kurssi");
             String aihe = req.queryParams("aihe");
             String kysymys = req.queryParams("kysymysteksti");
-            //System.out.println("Vastaanotettiin " + nimi);
-
-        return "Kerrotaan siitä tiedon lähettäjälle: ";
+            kysymysDao.saveOrUpdate(new Kysymys(kurssi,aihe,kysymys));
+            
+            HashMap map = new HashMap<>();
+            map.put("tehtavat", kysymysDao.findAll());
+            res.redirect("/opiskelija");
+            return "";
         });
     }
 }
