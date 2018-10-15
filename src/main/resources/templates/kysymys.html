@@ -8,7 +8,11 @@
 
     <body>
         <h1>Kysymys</h1>
-
-        <p> Testi </p>
+        
+        <h3>Kurssi:</h3> <span th:text="${kys.kurssi}" />
+        <h3>Aihe: </h3> <span th:text="${kys.aihe}" />
+        <h3>Kysymys: </h3> <span th:text="${kys.kysymysteksti}" />
+        
+        <p> Vastaukset </p>
     </body>
 </html>

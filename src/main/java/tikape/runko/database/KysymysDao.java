@@ -34,6 +34,9 @@ public class KysymysDao implements Dao<Kysymys, Integer> {
         ResultSet rs = stmt.executeQuery();
         boolean hasOne = rs.next();
         if (!hasOne) {
+            rs.close();
+            stmt.close();
+            connection.close();
             return null;
         }
 
@@ -47,6 +50,18 @@ public class KysymysDao implements Dao<Kysymys, Integer> {
 
         rs.close();
         stmt.close();
+        
+        List<Vastaus> vastaukset = new ArrayList<>();
+            PreparedStatement ps2 = connection.prepareStatement("SELECT * FROM Vastaus WHERE Vastaus.kysymys_id = " + id);
+            ResultSet rs2 = ps2.executeQuery();
+            while(rs2.next()){
+                vastaukset.add(new Vastaus(rs2.getInt("id"),rs2.getString("teksti"),rs2.getBoolean("oikein")));
+            }
+            o.setLista(vastaukset);
+            
+            rs2.close();
+            ps2.close();
+        
         connection.close();
 
         return o;
@@ -125,6 +140,15 @@ public class KysymysDao implements Dao<Kysymys, Integer> {
         smt.executeUpdate();
         
         smt.close();
+        
+        PreparedStatement sm = connection.prepareStatement("SELECT id FROM Kysymys WHERE kysymysteksti LIKE ?");
+        sm.setObject(1, a.getKysymysteksti());
+        ResultSet rrs = sm.executeQuery();
+        if(rrs.next()) {
+            a.setId(rrs.getInt(1));
+        }
+        rrs.close();
+        sm.close();
         connection.close();
         return a;
     }
