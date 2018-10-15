@@ -14,6 +14,11 @@
         <h3>Aihe: </h3> <span th:text="${kys.aihe}" />
         <h3>Kysymys: </h3> <span th:text="${kys.kysymysteksti}" />
         
-        <p> Vastaukset </p>
+        <h2> Vastaukset </h2>
+        
+        <span>Vastaus:</span><br/><input type="text" name="vastaus"/><br/>
+        <input type="submit" value="Lisää"/>
+        
+        <p><a href="/opiskelija">Takaisin kysymysten luontiin</a></p>
     </body>
 </html>
