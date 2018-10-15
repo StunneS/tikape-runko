@@ -45,12 +45,19 @@ public class Main {
         
         get("/opiskelijat/:id", (req, res) -> {
             HashMap map = new HashMap<>();
-            Kysymys a = kysymysDao.findOne(Integer.parseInt(req.params(":id")));
-            System.out.println(a.getKurssi());
             map.put("kys", kysymysDao.findOne(Integer.parseInt(req.params(":id"))));
 
             return new ModelAndView(map, "kysymys");
         }, new ThymeleafTemplateEngine());
+        
+        Spark.post("/poista/:id", (req, res) -> {
+            //int id = Integer.parseInt(req.queryParams("id"));
+            kysymysDao.delete(Integer.parseInt(req.params(":id")));
+            HashMap map = new HashMap<>();
+            map.put("tehtavat", kysymysDao.findAll());
+            res.redirect("/opiskelijat");
+            return "";
+        });
         
         get("/opiskelija", (req, res) -> {
             HashMap map = new HashMap<>();
