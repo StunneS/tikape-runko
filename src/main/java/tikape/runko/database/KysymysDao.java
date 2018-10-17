@@ -55,7 +55,9 @@ public class KysymysDao implements Dao<Kysymys, Integer> {
             PreparedStatement ps2 = connection.prepareStatement("SELECT * FROM Vastaus WHERE Vastaus.kysymys_id = " + id);
             ResultSet rs2 = ps2.executeQuery();
             while(rs2.next()){
-                vastaukset.add(new Vastaus(rs2.getInt("id"),rs2.getString("teksti"),rs2.getBoolean("oikein")));
+                Vastaus v = new Vastaus(rs2.getInt("kysymys_id"),rs2.getString("teksti"),rs2.getBoolean("oikein"));
+                v.setId(rs2.getInt("id"));
+                vastaukset.add(v);
             }
             o.setLista(vastaukset);
             
@@ -89,7 +91,9 @@ public class KysymysDao implements Dao<Kysymys, Integer> {
             PreparedStatement ps2 = connection.prepareStatement("SELECT * FROM Vastaus WHERE Vastaus.kysymys_id = " + id);
             ResultSet rs2 = ps2.executeQuery();
             while(rs2.next()){
-                vastaukset.add(new Vastaus(rs2.getInt("id"),rs2.getString("teksti"),rs2.getBoolean("oikein")));
+                Vastaus v = new Vastaus(rs2.getInt("kysymys_id"),rs2.getString("teksti"),rs2.getBoolean("oikein"));
+                v.setId(rs2.getInt("id"));
+                vastaukset.add(v);
             }
             o.setLista(vastaukset);
             kysymykset.add(o);
@@ -113,6 +117,10 @@ public class KysymysDao implements Dao<Kysymys, Integer> {
         stmt.executeUpdate();
         
         stmt.close();
+        PreparedStatement st = connection.prepareStatement("DELETE FROM Vastaus WHERE kysymys_id = ?");
+        st.setObject(1, key);
+        st.executeUpdate();
+        st.close();
         
         connection.close();
     }

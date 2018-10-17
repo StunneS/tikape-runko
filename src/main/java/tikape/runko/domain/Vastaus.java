@@ -15,31 +15,31 @@ public class Vastaus {
     private boolean oikein;
     private Integer kys;
 
-    public Vastaus(Integer id, String teksti, Boolean oikein) {
-        this.id = id;
+    public Vastaus(Integer kys, String teksti, Boolean oikein) {
+        this.kys = kys;
         this.teksti = teksti;
         this.oikein = oikein;
         
     }
-    public Vastaus(Integer id, String teksti) {
-        this.id = id;
+    public Vastaus(Integer kys, String teksti) {
+        this.kys = kys;
         this.teksti = teksti;
         //this.oikein = oikein;
         
     }
 
-    /*public Integer getKys() {
+    public Integer getKys() {
         return kys;
     }
     public void setKys(int kys) {
         this.kys = kys;
     }
-    */
+    
     public Integer getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 

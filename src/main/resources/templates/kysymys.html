@@ -19,6 +19,9 @@
         <ol>
             <li th:each="vastaus: ${kys.lista}">
                 <span th:text="${vastaus.teksti}">Teksti</span>
+                <form method="POST" th:action="@{~/poistav/{id}(id=${vastaus.id})}">
+                    <input type="submit" value="Poista"/>
+                </form>
             </li>
         </ol>
         

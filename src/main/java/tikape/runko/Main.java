@@ -52,7 +52,7 @@ public class Main {
 
             return new ModelAndView(map, "kysymys");
         }, new ThymeleafTemplateEngine());
-        //POISTO
+        //POISTO KYS
         Spark.post("/poista/:id", (req, res) -> {
             //int id = Integer.parseInt(req.queryParams("id"));
             kysymysDao.delete(Integer.parseInt(req.params(":id")));
@@ -82,12 +82,24 @@ public class Main {
         //LISÄÄ VASTAUS
         Spark.post("/lisaa/:id", (req, res) -> {
             //int id = Integer.parseInt(req.queryParams("id"));
-            Kysymys o = kysymysDao.findOne(Integer.parseInt(req.params(":id")));
+            //Kysymys o = kysymysDao.findOne(Integer.parseInt(req.params(":id")));
             String vas = req.queryParams("vastaus");
             vastausDao.saveOrUpdate(new Vastaus(Integer.parseInt(req.params(":id")),vas));
             HashMap map = new HashMap<>();
             map.put("vastaukset", vastausDao.findAllWanted(Integer.parseInt(req.params(":id"))));
             res.redirect("/opiskelijat/"+Integer.parseInt(req.params(":id")));
+            return "";
+        });
+        //POISTA VASTAUS
+        Spark.post("/poistav/:id", (req, res) -> {
+            //int id = Integer.parseInt(req.queryParams("id"));
+            Vastaus u = vastausDao.findOne(Integer.parseInt(req.params(":id")));
+            vastausDao.delete(Integer.parseInt(req.params(":id")));
+            /*Kysymys o = kysymysDao.findOne(Integer.parseInt(req.params(":id")));
+            o.setLista(vastausDao.findAllWanted(Integer.parseInt(req.params(":id")))); */
+            HashMap map = new HashMap<>();
+            map.put("vastaukset",vastausDao.findAllWanted(Integer.parseInt(req.params(":id"))));
+            res.redirect("/opiskelijat/" + u.getKys());
             return "";
         });
     }

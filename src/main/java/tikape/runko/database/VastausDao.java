@@ -39,8 +39,9 @@ public class VastausDao  implements Dao<Vastaus, Integer> {
         Integer id = rs.getInt("id");
         String teksti = rs.getString("teksti");
         boolean oikein = rs.getBoolean("oikein");
-        
-        Vastaus o = new Vastaus(id,teksti,oikein);
+        Integer ky = rs.getInt("kysymys_id");
+        Vastaus o = new Vastaus(ky,teksti,oikein);
+        o.setId(id);
 
         rs.close();
         stmt.close();
@@ -60,10 +61,13 @@ public class VastausDao  implements Dao<Vastaus, Integer> {
         ResultSet rs = stmt.executeQuery();
         List<Vastaus> vastaukset = new ArrayList<>();
         while (rs.next()) {
+            Integer ky= rs.getInt("kysymys_id");
             Integer id = rs.getInt("id");
             String teksti = rs.getString("teksti");
             boolean oikein = rs.getBoolean("oikein");
-            vastaukset.add(new Vastaus(id, teksti, oikein));
+            Vastaus o = new Vastaus(ky, teksti, oikein);
+            o.setId(id);
+            vastaukset.add(o);
         }
 
         rs.close();
@@ -73,21 +77,23 @@ public class VastausDao  implements Dao<Vastaus, Integer> {
         return vastaukset;
     }
 
-    public List<Vastaus> findAllWanted(int id) throws SQLException {
+    public List<Vastaus> findAllWanted(int kys) throws SQLException {
 
         // ei toteutettu
         //entä oikeat vastaukset? Tai tietyn kysymyksen vastaukset?
         Connection connection = database.getConnection();
         PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Vastaus WHERE kysymys_id = ?");
-        stmt.setObject(1, id);
+        stmt.setObject(1, kys);
 
         ResultSet rs = stmt.executeQuery();
         List<Vastaus> vastaukset = new ArrayList<>();
         while (rs.next()) {
-            //Integer id = rs.getInt("id");
+            Integer apu = rs.getInt("id");
             String teksti = rs.getString("teksti");
             boolean oikein = rs.getBoolean("oikein");
-            vastaukset.add(new Vastaus(id, teksti, oikein));
+            Vastaus vas = new Vastaus(kys, teksti, oikein);
+            vas.setId(apu);
+            vastaukset.add(vas);
         }
 
         rs.close();
@@ -129,20 +135,21 @@ public class VastausDao  implements Dao<Vastaus, Integer> {
         PreparedStatement smt = connection.prepareStatement("INSERT INTO Vastaus (teksti, oikein, kysymys_id) VALUES (?,?,?)");
         smt.setObject(1, a.getTeksti());
         smt.setObject(2, a.getOikein());
-        smt.setObject(3, a.getId());
+        smt.setObject(3, a.getKys());
         smt.executeUpdate();
         
         smt.close();
         
-        /*PreparedStatement sm = connection.prepareStatement("SELECT id FROM Kysymys WHERE kysymysteksti LIKE ?");
-        sm.setObject(1, a.getKysymysteksti());
+        PreparedStatement sm = connection.prepareStatement("SELECT id FROM Vastaus WHERE teksti LIKE ?");
+        sm.setObject(1, a.getTeksti());
         ResultSet rrs = sm.executeQuery();
         if(rrs.next()) {
             a.setId(rrs.getInt(1));
         }
+        //System.out.println(a.getId());
         rrs.close();
         sm.close();
-*/
+        
         connection.close();
         return a;
     }

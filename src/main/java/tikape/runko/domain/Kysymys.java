@@ -39,14 +39,14 @@ public class Kysymys {
     }
 
     public void setKurssi(String nimi) {
-        this.kurssi = kurssi;
+        this.kurssi = nimi;
     }
     public String getAihe() {
         return aihe;
     }
 
     public void setAihe(String nimi) {
-        this.kurssi = kurssi;
+        this.aihe = nimi;
     }
     public String getKysymysteksti(){
     return kysymysteksti;
