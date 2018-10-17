@@ -13,6 +13,7 @@ public class Vastaus {
     private String teksti;
     private Integer id;
     private boolean oikein;
+    private Integer kys;
 
     public Vastaus(Integer id, String teksti, Boolean oikein) {
         this.id = id;
@@ -20,7 +21,20 @@ public class Vastaus {
         this.oikein = oikein;
         
     }
+    public Vastaus(Integer id, String teksti) {
+        this.id = id;
+        this.teksti = teksti;
+        //this.oikein = oikein;
+        
+    }
 
+    /*public Integer getKys() {
+        return kys;
+    }
+    public void setKys(int kys) {
+        this.kys = kys;
+    }
+    */
     public Integer getId() {
         return id;
     }
@@ -34,7 +48,7 @@ public class Vastaus {
     }
 
     public void setTeksti(String nimi) {
-        this.teksti = teksti;
+        this.teksti = nimi;
     }
     public boolean getOikein() {
         return oikein;

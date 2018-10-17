@@ -16,8 +16,16 @@
         
         <h2> Vastaukset </h2>
         
-        <span>Vastaus:</span><br/><input type="text" name="vastaus"/><br/>
-        <input type="submit" value="Lisää"/>
+        <ol>
+            <li th:each="vastaus: ${kys.lista}">
+                <span th:text="${vastaus.teksti}">Teksti</span>
+            </li>
+        </ol>
+        
+        <form method="POST" th:action="@{~/lisaa/{id}(id=${kys.id})}">
+            <span>Vastaus:</span><br/><input type="text" name="vastaus"/><br/>
+            <input type="submit" value="Lisää"/>
+        </form>
         
         <p><a href="/opiskelija">Takaisin kysymysten luontiin</a></p>
     </body>
