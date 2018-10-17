@@ -72,11 +72,11 @@ public class Main {
             String kurssi = req.queryParams("kurssi");
             String aihe = req.queryParams("aihe");
             String kysymys = req.queryParams("kysymysteksti");
-            kysymysDao.saveOrUpdate(new Kysymys(kurssi,aihe,kysymys));
-            
-            HashMap map = new HashMap<>();
-            map.put("tehtavat", kysymysDao.findAll());
-            res.redirect("/opiskelija");
+            Kysymys kys = new Kysymys(kurssi,aihe,kysymys);
+            kysymysDao.saveOrUpdate(kys);
+            //HashMap map = new HashMap<>();
+            //map.put("tehtavat", kysymysDao.findAll());
+            res.redirect("/opiskelijat/" + kys.getId());
             return "";
         });
         //LISÄÄ VASTAUS
