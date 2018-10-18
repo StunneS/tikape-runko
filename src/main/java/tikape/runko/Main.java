@@ -72,7 +72,7 @@ public class Main {
                 //res.redirect("/uusi");
                 //return "";
                 HashMap map = new HashMap<>();
-                map.put("error", "Varmista että mikään tekstikentistä ole tyhjä.");
+                map.put("error", "Varmista ettei mikään tekstikentistä ole tyhjä.");
 
             return new ModelAndView(map, "opiskelija");
                 
