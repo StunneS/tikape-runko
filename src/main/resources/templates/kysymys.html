@@ -7,7 +7,7 @@
     </head>
 
     <body>
-        <p><a href="/opiskelijat">Takaisin</a></p>
+        <p><a href="/kysymykset">Takaisin</a></p>
         <h1>Kysymys</h1>
         
         <h3>Kurssi:</h3> <span th:text="${kys.kurssi}" />
@@ -18,6 +18,7 @@
         
         <ol>
             <li th:each="vastaus: ${kys.lista}">
+                <span th:text="${vastaus.oikein} ? 'Oikein.' : 'Väärin.'"></span>
                 <span th:text="${vastaus.teksti}">Teksti</span>
                 <form method="POST" th:action="@{~/poistav/{id}(id=${vastaus.id})}">
                     <input type="submit" value="Poista"/>
@@ -26,10 +27,11 @@
         </ol>
         
         <form method="POST" th:action="@{~/lisaa/{id}(id=${kys.id})}">
-            <span>Vastaus:</span><br/><input type="text" name="vastaus"/><br/>
+            <span>Uusi vastaus:</span><br/><input type="text" name="vastaus"/><br/>
             <input type="submit" value="Lisää"/>
+            <span>Oikein:</span><input type="checkbox" name="tosi" value="oikein"/>
         </form>
         
-        <p><a href="/opiskelija">Takaisin kysymysten luontiin</a></p>
+        <p><a href="/uusi">Takaisin kysymysten luontiin</a></p>
     </body>
 </html>

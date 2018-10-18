@@ -23,8 +23,6 @@ public class Main {
         File tied = new File("db","tietokanta.db");
         Database database = new Database("jdbc:sqlite:" + tied.getAbsolutePath());
         database.init();
-
-        OpiskelijaDao opiskelijaDao = new OpiskelijaDao(database);
         
         //OMAA NYT
         KysymysDao kysymysDao = new KysymysDao(database);
@@ -39,14 +37,14 @@ public class Main {
         }, new ThymeleafTemplateEngine());
 
         //KYSYMYSTEN LISTAUS
-        get("/opiskelijat", (req, res) -> {
+        get("/kysymykset", (req, res) -> {
             HashMap map = new HashMap<>();
             map.put("kysymykset", kysymysDao.findAll());
 
             return new ModelAndView(map, "opiskelijat");
         }, new ThymeleafTemplateEngine());
         //KYSYMYS SIVU
-        get("/opiskelijat/:id", (req, res) -> {
+        get("/kysymykset/:id", (req, res) -> {
             HashMap map = new HashMap<>();
             map.put("kys", kysymysDao.findOne(Integer.parseInt(req.params(":id"))));
 
@@ -54,52 +52,46 @@ public class Main {
         }, new ThymeleafTemplateEngine());
         //POISTO KYS
         Spark.post("/poista/:id", (req, res) -> {
-            //int id = Integer.parseInt(req.queryParams("id"));
             kysymysDao.delete(Integer.parseInt(req.params(":id")));
-            HashMap map = new HashMap<>();
-            map.put("tehtavat", kysymysDao.findAll());
-            res.redirect("/opiskelijat");
+            
+            res.redirect("/kysymykset");
             return "";
         });
         //KYSYMYSTEN LUONTI SIVULLE
-        get("/opiskelija", (req, res) -> {
+        get("/uusi", (req, res) -> {
             HashMap map = new HashMap<>();
 
             return new ModelAndView(map, "opiskelija");
         }, new ThymeleafTemplateEngine());
         //KUN KYSYMYS SAATU
-        Spark.post("/opiskelija", (req, res) -> {
+        Spark.post("/uusi", (req, res) -> {
             String kurssi = req.queryParams("kurssi");
             String aihe = req.queryParams("aihe");
             String kysymys = req.queryParams("kysymysteksti");
             Kysymys kys = new Kysymys(kurssi,aihe,kysymys);
             kysymysDao.saveOrUpdate(kys);
-            //HashMap map = new HashMap<>();
-            //map.put("tehtavat", kysymysDao.findAll());
-            res.redirect("/opiskelijat/" + kys.getId());
+ 
+            res.redirect("/kysymykset/" + kys.getId());
             return "";
         });
         //LISÄÄ VASTAUS
         Spark.post("/lisaa/:id", (req, res) -> {
-            //int id = Integer.parseInt(req.queryParams("id"));
-            //Kysymys o = kysymysDao.findOne(Integer.parseInt(req.params(":id")));
             String vas = req.queryParams("vastaus");
-            vastausDao.saveOrUpdate(new Vastaus(Integer.parseInt(req.params(":id")),vas));
-            HashMap map = new HashMap<>();
-            map.put("vastaukset", vastausDao.findAllWanted(Integer.parseInt(req.params(":id"))));
-            res.redirect("/opiskelijat/"+Integer.parseInt(req.params(":id")));
+            boolean oik = false;
+            if(req.queryParams("tosi") != null) {
+                oik = true;
+            }
+            vastausDao.saveOrUpdate(new Vastaus(Integer.parseInt(req.params(":id")),vas,oik));
+            
+            res.redirect("/kysymykset/"+Integer.parseInt(req.params(":id")));
             return "";
         });
         //POISTA VASTAUS
         Spark.post("/poistav/:id", (req, res) -> {
-            //int id = Integer.parseInt(req.queryParams("id"));
             Vastaus u = vastausDao.findOne(Integer.parseInt(req.params(":id")));
             vastausDao.delete(Integer.parseInt(req.params(":id")));
-            /*Kysymys o = kysymysDao.findOne(Integer.parseInt(req.params(":id")));
-            o.setLista(vastausDao.findAllWanted(Integer.parseInt(req.params(":id")))); */
-            HashMap map = new HashMap<>();
-            map.put("vastaukset",vastausDao.findAllWanted(Integer.parseInt(req.params(":id"))));
-            res.redirect("/opiskelijat/" + u.getKys());
+            
+            res.redirect("/kysymykset/" + u.getKys());
             return "";
         });
     }

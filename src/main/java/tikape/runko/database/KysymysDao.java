@@ -55,7 +55,10 @@ public class KysymysDao implements Dao<Kysymys, Integer> {
             PreparedStatement ps2 = connection.prepareStatement("SELECT * FROM Vastaus WHERE Vastaus.kysymys_id = " + id);
             ResultSet rs2 = ps2.executeQuery();
             while(rs2.next()){
-                Vastaus v = new Vastaus(rs2.getInt("kysymys_id"),rs2.getString("teksti"),rs2.getBoolean("oikein"));
+                Vastaus v = new Vastaus(rs2.getInt("kysymys_id"),rs2.getString("teksti"),false);
+                if(rs2.getInt("oikein") == 1) {
+                    v = new Vastaus(rs2.getInt("kysymys_id"),rs2.getString("teksti"),true);
+                }
                 v.setId(rs2.getInt("id"));
                 vastaukset.add(v);
             }
@@ -91,7 +94,10 @@ public class KysymysDao implements Dao<Kysymys, Integer> {
             PreparedStatement ps2 = connection.prepareStatement("SELECT * FROM Vastaus WHERE Vastaus.kysymys_id = " + id);
             ResultSet rs2 = ps2.executeQuery();
             while(rs2.next()){
-                Vastaus v = new Vastaus(rs2.getInt("kysymys_id"),rs2.getString("teksti"),rs2.getBoolean("oikein"));
+                Vastaus v = new Vastaus(rs2.getInt("kysymys_id"),rs2.getString("teksti"),false);
+                if(rs2.getInt("oikein") == 1) {
+                    v = new Vastaus(rs2.getInt("kysymys_id"),rs2.getString("teksti"),true);
+                }
                 v.setId(rs2.getInt("id"));
                 vastaukset.add(v);
             }

@@ -134,7 +134,11 @@ public class VastausDao  implements Dao<Vastaus, Integer> {
         
         PreparedStatement smt = connection.prepareStatement("INSERT INTO Vastaus (teksti, oikein, kysymys_id) VALUES (?,?,?)");
         smt.setObject(1, a.getTeksti());
-        smt.setObject(2, a.getOikein());
+        if(a.getOikein()) {
+            smt.setObject(2,1);
+        } else {
+            smt.setObject(2,0);
+        }
         smt.setObject(3, a.getKys());
         smt.executeUpdate();
         
