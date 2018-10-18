@@ -68,12 +68,27 @@ public class Main {
             String kurssi = req.queryParams("kurssi");
             String aihe = req.queryParams("aihe");
             String kysymys = req.queryParams("kysymysteksti");
+            if(kurssi.equals("") || aihe.equals("") || kysymys.equals("")) {
+                //res.redirect("/uusi");
+                //return "";
+                HashMap map = new HashMap<>();
+                map.put("error", "Varmista että mikään tekstikentistä ole tyhjä.");
+
+            return new ModelAndView(map, "opiskelija");
+                
+            }
             Kysymys kys = new Kysymys(kurssi,aihe,kysymys);
             kysymysDao.saveOrUpdate(kys);
  
-            res.redirect("/kysymykset/" + kys.getId());
-            return "";
-        });
+            //res.redirect("/kysymykset/" + kys.getId());
+            
+            HashMap map = new HashMap<>();
+            map.put("kys", kysymysDao.findOne(kys.getId()));
+
+            return new ModelAndView(map, "kysymys");
+            //return "";
+        }, new ThymeleafTemplateEngine());
+        
         //LISÄÄ VASTAUS
         Spark.post("/lisaa/:id", (req, res) -> {
             String vas = req.queryParams("vastaus");

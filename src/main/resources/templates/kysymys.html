@@ -8,18 +8,17 @@
 
     <body>
         <p><a href="/kysymykset">Takaisin</a></p>
-        <h1>Kysymys</h1>
+        <h1>Kysymys: </h1> <span th:text="${kys.kysymysteksti}" />
         
         <h3>Kurssi:</h3> <span th:text="${kys.kurssi}" />
         <h3>Aihe: </h3> <span th:text="${kys.aihe}" />
-        <h3>Kysymys: </h3> <span th:text="${kys.kysymysteksti}" />
         
         <h2> Vastaukset </h2>
         
         <ol>
             <li th:each="vastaus: ${kys.lista}">
-                <span th:text="${vastaus.oikein} ? 'Oikein.' : 'Väärin.'"></span>
                 <span th:text="${vastaus.teksti}">Teksti</span>
+                <span th:text="${vastaus.oikein} ? 'Oikein.' : 'Väärin.'"></span>
                 <form method="POST" th:action="@{~/poistav/{id}(id=${vastaus.id})}">
                     <input type="submit" value="Poista"/>
                 </form>

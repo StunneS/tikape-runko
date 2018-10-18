@@ -8,6 +8,7 @@
 
     <body>
         <p><a href="/">Takaisin</a></p>
+        <p> Uusi kysymys </p>
         <form method="POST" action="/uusi">
             <span>Kurssi:</span><br/>
             <input type="text" name="kurssi"/><br/>
@@ -17,6 +18,8 @@
             <input type="text" name="kysymysteksti"/><br/>
             <input type="submit" value="Lisää kysymys"/>
         </form>
+        
+        <span th:text="${error}" />
         
     </body>
 </html>
