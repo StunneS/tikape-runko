@@ -25,7 +25,6 @@ public class VastausDao  implements Dao<Vastaus, Integer> {
     }
     @Override
     public Vastaus findOne(Integer key) throws SQLException {
-        // ei toteutettu
         Connection connection = database.getConnection();
         PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Vastaus WHERE id = ?");
         stmt.setObject(1, key);
@@ -52,9 +51,6 @@ public class VastausDao  implements Dao<Vastaus, Integer> {
 
     @Override
     public List<Vastaus> findAll() throws SQLException {
-
-        // ei toteutettu
-        //entä oikeat vastaukset? Tai tietyn kysymyksen vastaukset?
         Connection connection = database.getConnection();
         PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Vastaus");
 
@@ -78,9 +74,6 @@ public class VastausDao  implements Dao<Vastaus, Integer> {
     }
 
     public List<Vastaus> findAllWanted(int kys) throws SQLException {
-
-        // ei toteutettu
-        //entä oikeat vastaukset? Tai tietyn kysymyksen vastaukset?
         Connection connection = database.getConnection();
         PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Vastaus WHERE kysymys_id = ?");
         stmt.setObject(1, kys);
@@ -105,7 +98,6 @@ public class VastausDao  implements Dao<Vastaus, Integer> {
     
     @Override
     public void delete(Integer key) throws SQLException {
-        // ei toteutettu
         Connection connection = database.getConnection();
         PreparedStatement stmt = connection.prepareStatement("DELETE FROM Vastaus WHERE id = ?");
         stmt.setObject(1, key);
@@ -117,7 +109,6 @@ public class VastausDao  implements Dao<Vastaus, Integer> {
     }
     @Override
     public Vastaus saveOrUpdate(Vastaus a) throws SQLException{
-        //ei tehty
         Connection connection = database.getConnection();
         PreparedStatement stmt = connection.prepareStatement("SELECT * From Vastaus WHERE teksti LIKE ?");
         stmt.setObject(1, a.getTeksti());
@@ -150,7 +141,6 @@ public class VastausDao  implements Dao<Vastaus, Integer> {
         if(rrs.next()) {
             a.setId(rrs.getInt(1));
         }
-        //System.out.println(a.getId());
         rrs.close();
         sm.close();
         

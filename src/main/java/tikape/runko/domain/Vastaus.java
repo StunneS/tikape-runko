@@ -21,12 +21,6 @@ public class Vastaus {
         this.oikein = oikein;
         
     }
-    public Vastaus(Integer kys, String teksti) {
-        this.kys = kys;
-        this.teksti = teksti;
-        //this.oikein = oikein;
-        
-    }
 
     public Integer getKys() {
         return kys;
